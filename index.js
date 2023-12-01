@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const mobilenextButton = document.getElementById("mobile-nextBtn-1");
       const getacall = document.getElementById("costformgetacall");
       const mobilegetacall = document.getElementById("mobile-costformgetacall");
-      if (stepNumber == 3) {
+      if (stepNumber == 2) {
         nextButton.style.display = "none";
         getacall.style.display = "flex";
         mobilegetacall.style.display = "flex";
