@@ -171,9 +171,61 @@ document.addEventListener("DOMContentLoaded", function () {
       nextButton.style.color = "#C1C1C1";
       mobilenextButton.style.color = "#C1C1C1";
     } else {
-        nextButton.style.color = "#FFF";
-        mobilenextButton.style.color = "#FFF";
+      nextButton.style.color = "#FFF";
+      mobilenextButton.style.color = "#FFF";
     }
+  }
+  function submitform() {
+    let input_1 =
+      document.getElementById("goldenvisa_step1_1_1").style.display !== "none"
+        ? "Salary"
+        : "Property";
+    input_1 =
+      document.getElementById("goldenvisa_step1_1_2").style.display !==
+        "none" ? "Investment": input_1;
+    const input_3 =
+      document.getElementById("goldenvisa_step1_2").style.display !== "none"
+        ? "Yes"
+        : "No";
+    const input_4 = document.getElementById("goldenvisa_step2_1").value;
+    const input_5 = document.getElementById("goldenvisa_step2_2").value;
+    const input_6 = document.getElementById("goldenvisa_step2_3").value;
+    const countrycode = document.getElementById(
+      "step-1-country-code"
+    ).textContent;
+    const formdata = {
+      input_1,
+      input_3,
+      input_4,
+      input_5:countrycode+input_5,
+      input_6,
+    };
+    fetch(
+      "https://test.wp.levitation.co.in/wp-json/gf/v2/forms/15/submissions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formdata),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((res) => {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          showStep(currentStep);
+          updateStepNavigation();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   showStep(currentStep);
@@ -222,30 +274,30 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("mobile-nextBtn-1")
     .addEventListener("click", function () {
-    //   if (currentStep == 1) {
-    //     if (document.getElementById("coststep1_1").value == "") {
-    //       return false;
-    //     }
-    //     if (document.getElementById("coststep1_2").value == "") {
-    //       return false;
-    //     }
-    //     if (document.getElementById("coststep1_3").value == "") {
-    //       return false;
-    //     }
-    //     if (document.getElementById("coststep1_4").value == "") {
-    //       return false;
-    //     }
-    //   } else if (currentStep == 2) {
-    //     if (document.getElementById("coststep2_1").value == "") {
-    //       return false;
-    //     }
-    //     if (document.getElementById("coststep2_2").value == "") {
-    //       return false;
-    //     }
-    //     if (document.getElementById("coststep2_3").value == "") {
-    //       return false;
-    //     }
-    //   }
+      //   if (currentStep == 1) {
+      //     if (document.getElementById("coststep1_1").value == "") {
+      //       return false;
+      //     }
+      //     if (document.getElementById("coststep1_2").value == "") {
+      //       return false;
+      //     }
+      //     if (document.getElementById("coststep1_3").value == "") {
+      //       return false;
+      //     }
+      //     if (document.getElementById("coststep1_4").value == "") {
+      //       return false;
+      //     }
+      //   } else if (currentStep == 2) {
+      //     if (document.getElementById("coststep2_1").value == "") {
+      //       return false;
+      //     }
+      //     if (document.getElementById("coststep2_2").value == "") {
+      //       return false;
+      //     }
+      //     if (document.getElementById("coststep2_3").value == "") {
+      //       return false;
+      //     }
+      //   }
       if (currentStep < totalSteps) {
         currentStep++;
         showStep(currentStep);
@@ -265,70 +317,61 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("costformgetacall")
     .addEventListener("click", function () {
-      if (currentStep < totalSteps) {
-        currentStep++;
-        showStep(currentStep);
-        updateStepNavigation();
-      }
+      submitform();
     });
   document
     .getElementById("mobile-costformgetacall")
     .addEventListener("click", function () {
-      if (currentStep < totalSteps) {
-        currentStep++;
-        showStep(currentStep);
-        updateStepNavigation();
-      }
+      submitform();
     });
-
-
 });
 function toggleRotation(rotationIconId) {
-    var icon = document.getElementById(rotationIconId);
+  var icon = document.getElementById(rotationIconId);
 
-    // Toggle rotation by adding or removing the 'rotate' class
-    if (!icon.classList.contains("rotate")) {
-      icon.style.transform = "rotate(0deg)";
-      icon.classList.add("rotate");
-    } else {
-      icon.style.transform = "rotate(180deg)";
-      icon.classList.remove("rotate");
-    }
+  // Toggle rotation by adding or removing the 'rotate' class
+  if (!icon.classList.contains("rotate")) {
+    icon.style.transform = "rotate(0deg)";
+    icon.classList.add("rotate");
+  } else {
+    icon.style.transform = "rotate(180deg)";
+    icon.classList.remove("rotate");
   }
-
-  function toggleDetails(detailsId, rotationIconId) {
-    toggleRotation(rotationIconId);
-    var details = document.getElementById(detailsId);
-    if (details.style.display === "block") {
-      details.style.display = "none";
-    } else {
-      details.style.display = "block";
-    }
-  }
-  
-  // Function to toggle the active/non-active states
-  function toggleStates(container) {
-    const checkboxActive = container.querySelector('.checkbox-active');
-    const checkboxNonActive = container.querySelector('.checkbox-non-active');
-
-    // Toggle the visibility based on the current state
-    checkboxActive.style.display = checkboxActive.style.display === 'none' ? 'flex' : 'none';
-    checkboxNonActive.style.display = checkboxNonActive.style.display === 'none' ? 'flex' : 'none';
-}
-function toggleStates1(container1,container2,container3) {
-    const checkboxActive1 = container1.querySelector('.checkbox-active');
-    const checkboxNonActive1 = container1.querySelector('.checkbox-non-active');
-    const checkboxActive2 = container2.querySelector('.checkbox-active');
-    const checkboxNonActive2 = container2.querySelector('.checkbox-non-active');
-    const checkboxActive3 = container3.querySelector('.checkbox-active');
-    const checkboxNonActive3 = container3.querySelector('.checkbox-non-active');
-
-    // Toggle the visibility based on the current state
-    checkboxActive1.style.display = 'flex';
-    checkboxNonActive1.style.display = 'none';
-    checkboxNonActive2.style.display = 'flex';
-    checkboxActive2.style.display = 'none';
-    checkboxNonActive3.style.display = 'flex';
-    checkboxActive3.style.display = 'none';
 }
 
+function toggleDetails(detailsId, rotationIconId) {
+  toggleRotation(rotationIconId);
+  var details = document.getElementById(detailsId);
+  if (details.style.display === "block") {
+    details.style.display = "none";
+  } else {
+    details.style.display = "block";
+  }
+}
+
+// Function to toggle the active/non-active states
+function toggleStates(container) {
+  const checkboxActive = container.querySelector(".checkbox-active");
+  const checkboxNonActive = container.querySelector(".checkbox-non-active");
+
+  // Toggle the visibility based on the current state
+  checkboxActive.style.display =
+    checkboxActive.style.display === "none" ? "flex" : "none";
+  checkboxNonActive.style.display =
+    checkboxNonActive.style.display === "none" ? "flex" : "none";
+}
+function toggleStates1(container1, container2, container3) {
+  const checkboxActive1 = container1.querySelector(".checkbox-active");
+  const checkboxNonActive1 = container1.querySelector(".checkbox-non-active");
+  const checkboxActive2 = container2.querySelector(".checkbox-active");
+  const checkboxNonActive2 = container2.querySelector(".checkbox-non-active");
+  const checkboxActive3 = container3.querySelector(".checkbox-active");
+  const checkboxNonActive3 = container3.querySelector(".checkbox-non-active");
+
+  // Toggle the visibility based on the current state
+  checkboxActive1.style.display = "flex";
+  checkboxNonActive1.style.display = "none";
+  checkboxNonActive2.style.display = "flex";
+  checkboxActive2.style.display = "none";
+  checkboxNonActive3.style.display = "flex";
+  checkboxActive3.style.display = "none";
+}
